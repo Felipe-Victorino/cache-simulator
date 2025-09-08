@@ -7,6 +7,7 @@ using BitSet = Mylib::BitSet<32>;
 
 int main (int argc, char **argv)
 {
+	// basicamente bitset é um espaco de armazenamento
 	BitSet bits;
 
 	bits = 127;
