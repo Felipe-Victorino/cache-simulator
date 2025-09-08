@@ -1,5 +1,6 @@
 CPP = g++
 MYLIB = ../my-lib
+FLAGS = -g
 CPPFLAGS = -Wall -std=c++23 -I$(MYLIB)/include
 LDFLAGS =
 BIN_NAME = cache-sim
@@ -31,5 +32,5 @@ $(BIN_NAME): $(OBJS)
 
 clean:
 	-$(RM) $(OBJS)
-	-$(RM) $(BIN_NAME)
+# 	-$(RM) $(BIN_NAME)
 
