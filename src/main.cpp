@@ -3,10 +3,19 @@
 
 #include <my-lib/bit.h>
 
+#define DEBUG
+
+#ifdef DEBUG
+#define dprint(x) std::cout << x << '\n'
+#else 
+#define dprint(x) do{} while(0)
+#endif
+
 using BitSet = Mylib::BitSet<32>;
 
 int main (int argc, char **argv)
 {
+	// basicamente bitset é um espaco de armazenamento
 	BitSet bits;
 
 	bits = 127;
@@ -32,3 +41,10 @@ int main (int argc, char **argv)
 
 	return 0;
 }
+
+class Cache{
+	public:
+	Cache(){
+
+	}
+};

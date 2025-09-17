@@ -8,11 +8,18 @@ RM = rm
 
 ########################################################
 
-SRC = $(wildcard *.cpp)
+SRC_DIR = src
 
-headerfiles = $(wildcard *.h)
+BUILD_FOLDER = src/build
+
+########################################################
+
+SRC = $(wildcard ${SRC_DIR}/*.cpp)
+
+headerfiles = $(wildcard ${SRC_FOLDER}/*.h)
 
 OBJS = ${SRC:.cpp=.o}
+
 
 ########################################################
 
