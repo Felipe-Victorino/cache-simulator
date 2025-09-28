@@ -19,6 +19,10 @@ int main (int argc, char **argv)
 	// basicamente bitset é um espaco de armazenamento
 	BitSet bits;
 
+	MemoryLevel ml;
+
+	
+
 	bits = 127;
 	dprint(bits);
 
