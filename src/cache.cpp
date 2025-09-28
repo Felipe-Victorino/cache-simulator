@@ -1,7 +1,11 @@
 #include <string>
 #include <my-lib/bit.h>
-#include "cache.h"
+#include "cache.hpp"
 
-CacheLevel::CacheLevel(){
-    this->name = "L1"
-};
+
+MemoryLevel::MemoryLevel(std::string name, int latency)
+{
+    this->p_name = name;
+    this->p_latency = latency;
+}
+
