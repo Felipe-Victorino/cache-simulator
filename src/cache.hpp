@@ -15,10 +15,10 @@ class MemoryLevel{
     MemoryLevel(std::string name, int latency);
 
     std::string getName();
-    std::string setName(std::string name);
+    void setName(std::string name);
 
     int getLatency();
-    int setLatency(int latency);
+    void setLatency(int latency);
 
 };
 
