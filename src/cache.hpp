@@ -16,7 +16,12 @@ class MemoryLevel{
     int p_latency;
     int p_linesize;
     BitSet p_bits;
+    int associative_set_size;
+    Bitset associative_set[];
+    
     enum WritePolicy p_policy;
+
+    MemoryLevel *next;
 
 	public:
     MemoryLevel();
@@ -27,15 +32,27 @@ class MemoryLevel{
     {
         return this->p_name;
     }
-    
-    void setName(std::string name){};
+    void MemoryLevel::setName(std::string name)
+    {
+        this->p_name = name;
+    }
+   
+    int MemoryLevel::getLatency()
+    {
+        return this->p_latency;
+    }
 
-    int getLatency(){};
-    void setLatency(int latency){};
+    void MemoryLevel::setLatency(int latency){
+        this->p_latency = latency;
+    }
 
-    BitSet getBitSet();
-    void setBitSet(BitSet bits){};
+    BitSet MemoryLevel::getBitSet(){
+        return this->p_bits;
+    }
 
+    void setBitSet(BitSet bits){
+        this->p_bits = bits;
+    };
 };
 
 
