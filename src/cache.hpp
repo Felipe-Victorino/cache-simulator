@@ -5,11 +5,18 @@
 
 using BitSet = Mylib::BitSet<32>;
 
+enum WritePolicy {
+    WRITE_BACK,
+    WRITE_THROUGH
+}
+
 class MemoryLevel{
     private:
     std::string p_name;
     int p_latency;
+    int p_linesize;
     BitSet p_bits;
+    enum WritePolicy p_policy;
 
 	public:
     MemoryLevel();
