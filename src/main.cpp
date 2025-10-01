@@ -2,6 +2,7 @@
 #include <cstdint>
 
 #include <my-lib/bit.h>
+#include "cache.hpp"
 
 #define DEBUG
 
