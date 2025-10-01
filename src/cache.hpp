@@ -21,15 +21,20 @@ class MemoryLevel{
 	public:
     MemoryLevel();
     MemoryLevel(std::string name, int latency, BitSet bits);
+    ~MemoryLevel();
 
-    std::string getName();
-    void setName(std::string name);
+    std::string MemoryLevel::getName()
+    {
+        return this->p_name;
+    }
+    
+    void setName(std::string name){};
 
-    int getLatency();
-    void setLatency(int latency);
+    int getLatency(){};
+    void setLatency(int latency){};
 
     BitSet getBitSet();
-    void setBitSet(BitSet bits);
+    void setBitSet(BitSet bits){};
 
 };
 

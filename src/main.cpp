@@ -22,7 +22,7 @@ int main (int argc, char **argv)
 	MemoryLevel ml;
 
 	
-
+	
 	bits = 127;
 	dprint(bits);
 

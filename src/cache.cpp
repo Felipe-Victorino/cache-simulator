@@ -10,15 +10,8 @@ MemoryLevel::MemoryLevel(std::string name, int latency, BitSet bits)
     this->p_latency = latency;
 }
 
-std::string MemoryLevel::getName()
-{
-    return this->p_name;
-}
+MemoryLevel::~MemoryLevel()
 
-void MemoryLevel::setName(std::string name)
-{
-    this->p_name = name;
-}
 
 int MemoryLevel::getLatency(){
     return this->p_latency;
