@@ -1,15 +1,15 @@
-#include <string>
-#include <my-lib/bit.h>
 #include "cache.hpp"
 
-MemoryLevel::MemoryLevel(){}
+Cache::Cache(){};
+Cache::~Cache(){};
 
-MemoryLevel::MemoryLevel(std::string name, int latency)
+Cache::Cache(std::string name, int latency, int linesize, int set_size)
 {
     this->p_name = name;
     this->p_latency = latency;
-    
-}
+    this->p_linesize = linesize;
+    this->associative_set_size = set_size;
+};
 
-MemoryLevel::~MemoryLevel()
-
+MemoryNode::MemoryNode(){};
+MemoryNode::~MemoryNode(){};

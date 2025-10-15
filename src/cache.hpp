@@ -8,52 +8,35 @@ using BitSet = Mylib::BitSet<32>;
 enum WritePolicy {
     WRITE_BACK,
     WRITE_THROUGH
-}
+};
 
-class MemoryLevel{
+enum Associativity{
+    FULL,
+    DIRECT,
+    SET
+};
+
+class Cache{
     private:
     std::string p_name;
     int p_latency;
     int p_linesize;
     BitSet p_bits;
     int associative_set_size;
-    Bitset associative_set[];
     
     enum WritePolicy p_policy;
 
-    MemoryLevel *next;
-
 	public:
-    MemoryLevel();
-    MemoryLevel(std::string name, int latency, BitSet bits);
-    ~MemoryLevel();
+    Cache();
+    Cache(std::string name, int latency, int linesize, int set_size);
 
-    std::string MemoryLevel::getName()
-    {
-        return this->p_name;
-    }
-    void MemoryLevel::setName(std::string name)
-    {
-        this->p_name = name;
-    }
-   
-    int MemoryLevel::getLatency()
-    {
-        return this->p_latency;
-    }
-
-    void MemoryLevel::setLatency(int latency){
-        this->p_latency = latency;
-    }
-
-    BitSet MemoryLevel::getBitSet(){
-        return this->p_bits;
-    }
-
-    void setBitSet(BitSet bits){
-        this->p_bits = bits;
-    };
+    std::string getName(){return this->p_name;}
+    void setName(std::string name){this->p_name = name;}
+    int getLatency() {return this->p_latency;}
+    void setLatency(int latency){this->p_latency = latency;}
+    int getAssociativeSetSize(){return this->associative_set_size;}
+    BitSet getBitSet(){return this->p_bits;}
+    void setBitSet(BitSet bits){this->p_bits = bits;};
 };
-
 
 #endif

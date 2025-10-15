@@ -1,17 +1,21 @@
 #ifndef PROCESSOR_H
 #define PROCESSOR_H
 
-enum MemoryAccess{
-    SEQUENTIAL,
-    RANDOM
-};
+#include <cstdlib>
+#include "cache.hpp"
+
 
 class Processor
 {
 private:
-    enum MemoryAcesss p_access;
+    enum MemoryAccess{SEQUENTIAL, RANDOM};
+    enum MemoryAccess access;
+
+    
+
 public:
-    Processor(/* args */);
+    Processor();
+    
     ~Processor();
 };
 
