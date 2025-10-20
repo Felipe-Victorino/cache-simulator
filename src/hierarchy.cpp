@@ -1,11 +1,5 @@
 #include "hierarchy.hpp"
 
-MemoryList::add(MemoryNode node){
-    MemoryNode new 
-    if ()
-    {
-        /* code */
-    }
-    
-
+MemoryHierarchy::MemoryHierarchy(int quantity){
+    this->p_levelQuantity = quantity;
 }

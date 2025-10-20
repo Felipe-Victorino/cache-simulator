@@ -2,30 +2,23 @@
 #define HIERARCHY_H
 #include "cache.hpp"
 #include "processor.hpp"
+#include <list>
+
+
 
 class MemoryHierarchy{
 
-    MemoryList cacheList;
+    std::list<Cache> cacheList;
     Processor processor;
+    int p_levelQuantity;
 
-
-}
-
-class MemoryList{
-    private:
-        MemoryNode root;
     public:
-        public add(MemoryNode node);
-    
-}
 
-typedef struct MemoryNode{
-    Cache ml;
+    MemoryHierarchy(int quantity);
 
-    MemoryNode* next;
+    int getLevelQuantity(){return this->p_levelQuantity;}
 
-    MemoryNode();
 
-} MemoryNode;
+};
 
 #endif

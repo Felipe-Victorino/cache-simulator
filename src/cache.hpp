@@ -10,17 +10,13 @@ enum WritePolicy {
     WRITE_THROUGH
 };
 
-enum Associativity{
-    FULL,
-    DIRECT,
-    SET
-};
 
 class Cache{
     private:
     std::string p_name;
     int p_latency;
     int p_linesize;
+    int p_associativity;
     BitSet p_bits;
     int associative_set_size;
     
@@ -28,7 +24,7 @@ class Cache{
 
 	public:
     Cache();
-    Cache(std::string name, int latency, int linesize, int set_size);
+    Cache(std::string name, int latency, int associativity, int linesize, int set_size);
 
     std::string getName(){return this->p_name;}
     void setName(std::string name){this->p_name = name;}
