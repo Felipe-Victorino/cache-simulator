@@ -18,6 +18,7 @@ class MemoryHierarchy{
 
     int getLevelQuantity(){return this->p_levelQuantity;}
 
+    void fillCacheList();
 
 };
 
