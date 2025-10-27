@@ -1,7 +1,9 @@
 #include <iostream>
 #include <cstdint>
+#include <cstdlib>
 
 #include <my-lib/bit.h>
+#include "hierarchy.hpp"
 
 #define DEBUG
 
@@ -11,40 +13,17 @@
 #define dprint(x) do{} while(0)
 #endif
 
-using BitSet = Mylib::BitSet<32>;
-
 int main (int argc, char **argv)
 {
-	// basicamente bitset é um espaco de armazenamento
-	BitSet bits;
+	if(argc != 2){
+		printf("usage: %s [cache_levels]\n", argv[0]);
+		exit(0);
+	}
 
-	bits = 127;
-	std::cout << bits << std::endl;
+	int conv = std::strtol(argv[1], NULL, 10);
 
-	// primeiro parâmetro é o bit inicial
-	// segundo parâmetro é a quantidade de bits a partir do bit inicial
-	bits[1, 2] = 0;
-	std::cout << bits << std::endl;
+	dprint(conv);
 
-	uint32_t most_sig = bits[31];
-	std::cout << "Most significant bit: " << most_sig << std::endl;
-
-	// quando for só 1 bit, pode omitir o segundo parâmetro
-	bits[31] = 1;
-	std::cout << bits << std::endl;
-
-	most_sig = bits[31];
-	std::cout << "Most significant bit: " << most_sig << std::endl;
-
-	bits[31] = bits[1];
-	std::cout << bits << std::endl;
-
+	MemoryHierarchy hierarchy(conv);
 	return 0;
 }
-
-class Cache{
-	public:
-	Cache(){
-
-	}
-};

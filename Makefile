@@ -39,5 +39,5 @@ $(BIN_NAME): $(OBJS)
 
 clean:
 	-$(RM) $(OBJS)
-# 	-$(RM) $(BIN_NAME)
+	-$(RM) $(BIN_NAME)
 
