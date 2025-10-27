@@ -3,7 +3,12 @@
 #include <string>
 #include <my-lib/bit.h>
 
-using BitSet = Mylib::BitSet<32>;
+#define LINE_SIZE 32
+
+using BitSet = Mylib::BitSet<LINE_SIZE>;
+/*
+A CACHE NÃO ARMAZENA DADOS REAIS, ELA É UM SIMULADOR DE TEMPO
+*/
 
 enum WritePolicy {
     WRITE_BACK,

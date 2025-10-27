@@ -1,10 +1,24 @@
 #include "hierarchy.hpp"
 
-MemoryHierarchy::MemoryHierarchy(int quantity){
+MemoryHierarchy::MemoryHierarchy(int quantity)
+{
     this->p_levelQuantity = quantity;
+    Processor processor(this->cacheList);
+    this->processor = processor;
 }
 
-void MemoryHierarchy::fillCacheList(){
-    Cache cacheLevel("test", 3, 3, 32, 4);
-    this->cacheList.emplace_back(cacheLevel);
+Cache MemoryHierarchy::configureMainMemory()
+{
+    
+}
+
+void MemoryHierarchy::fillCacheList()
+{
+    Cache cacheLevel("Main Memory", 3, 3, 32, 4);
+    for (size_t i = 0; i < this->p_levelQuantity; i++)
+    {
+         this->cacheList.emplace_back(cacheLevel);
+    }
+    dprint();
+   
 }

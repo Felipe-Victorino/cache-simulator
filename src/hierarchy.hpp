@@ -8,6 +8,8 @@
 
 class MemoryHierarchy{
 
+
+    /* Ultima cache da lista é memória principal*/
     std::list<Cache> cacheList;
     Processor processor;
     int p_levelQuantity;

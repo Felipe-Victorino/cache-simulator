@@ -13,8 +13,6 @@
 #define dprint(x) do{} while(0)
 #endif
 
-using BitSet = Mylib::BitSet<32>;
-
 int main (int argc, char **argv)
 {
 	if(argc != 2){
@@ -22,7 +20,7 @@ int main (int argc, char **argv)
 		exit(0);
 	}
 
-	int conv = strtol(argv[1], NULL, 10);
+	int conv = std::strtol(argv[1], NULL, 10);
 
 	dprint(conv);
 

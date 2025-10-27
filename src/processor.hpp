@@ -8,12 +8,12 @@
 
 class Processor
 {
-private:
+    private:
     enum MemoryAccess{SEQUENTIAL, RANDOM};
     enum MemoryAccess access;
     std::list<Cache> *cache;
-public:
-    Processor();
+    public:
+    Processor(std::list<Cache> *cache);
     
     ~Processor();
 };
