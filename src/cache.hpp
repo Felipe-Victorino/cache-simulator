@@ -20,24 +20,34 @@ class Cache{
     private:
     std::string p_name;
     int p_latency;
-    int p_linesize; //tamanho de linha da cache
+    int p_linesize = LINE_SIZE;//tamanho de linha da cache
     int p_associativity; // quantas linhas de memórias são agrupadas em uma linha de cache
     BitSet p_bits;
-    int p_total_sets;
+    int p_total_sets; 
     
     enum WritePolicy p_policy;
 
 	public:
     Cache();
-    Cache(std::string name, int latency, int associativity, int linesize, int set_size);
+    Cache(std::string name, int latency, int associativity, int set_size);
 
     int calculateCacheSize();
 
+    // GETTERS E SETTERS
+
     std::string getName(){return this->p_name;}
     void setName(std::string name){this->p_name = name;}
+
     int getLatency() {return this->p_latency;}
     void setLatency(int latency){this->p_latency = latency;}
+
+    int getLineSize(){return this->p_linesize;}
+    
+    int getAssociativity(){return this->p_associativity;}
+    void setAssociativity(int associativity){this->p_associativity = associativity;}
+
     int getAssociativeSetSize(){return this->p_total_sets;}
+
     BitSet getBitSet(){return this->p_bits;}
     void setBitSet(BitSet bits){this->p_bits = bits;};
 };

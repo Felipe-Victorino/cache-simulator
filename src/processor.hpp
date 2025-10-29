@@ -13,6 +13,7 @@ class Processor
     enum MemoryAccess access;
     std::list<Cache> *cache;
     public:
+    Processor();
     Processor(std::list<Cache> *cache);
     
     ~Processor();

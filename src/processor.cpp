@@ -13,6 +13,11 @@ Processor::Processor(std::list<Cache> *cache)
     this->cache = cache;
 }
 
+Processor::Processor()
+{
+
+}
+
 Processor::~Processor()
 {
 }

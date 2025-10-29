@@ -4,14 +4,7 @@
 
 #include <my-lib/bit.h>
 #include "hierarchy.hpp"
-
-#define DEBUG
-
-#ifdef DEBUG
-#define dprint(x) std::cout << x << '\n'
-#else 
-#define dprint(x) do{} while(0)
-#endif
+#include "debug.hpp"
 
 int main (int argc, char **argv)
 {

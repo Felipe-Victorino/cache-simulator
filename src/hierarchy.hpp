@@ -1,18 +1,24 @@
 #ifndef HIERARCHY_H
 #define HIERARCHY_H
+#include <list>
+
 #include "cache.hpp"
 #include "processor.hpp"
-#include <list>
+
 
 
 
 class MemoryHierarchy{
 
-
+    private:
     /* Ultima cache da lista é memória principal*/
-    std::list<Cache> cacheList;
-    Processor processor;
-    int p_levelQuantity;
+    
+    std::list<Cache> cacheList; // lista com as memórias
+    Processor processor; // objeto processador
+    unsigned int p_levelQuantity; // quantidade de caches, deve ser maior que 0
+
+    Cache configureMainMemory();
+    Cache configureCacheLevels();
 
     public:
 
