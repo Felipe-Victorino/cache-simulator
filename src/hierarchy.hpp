@@ -5,24 +5,23 @@
 #include "cache.hpp"
 #include "processor.hpp"
 
-
-
-
 class MemoryHierarchy{
 
     private:
     /* Ultima cache da lista é memória principal*/
-    
-    std::list<Cache> cacheList; // lista com as memórias
+    uint32_t p_n;
+    uint32_t p_stride;
+    std::vector<Cache> cacheList; // lista com as memórias
     Processor processor; // objeto processador
+    MainMemory mainMemory; // objeto memória principal
     unsigned int p_levelQuantity; // quantidade de caches, deve ser maior que 0
 
-    Cache configureMainMemory();
+    MainMemory configureMainMemory();
     Cache configureCacheLevels();
 
     public:
 
-    MemoryHierarchy(int quantity);
+    MemoryHierarchy(int quantity, int runtime);
 
     int getLevelQuantity(){return this->p_levelQuantity;}
 

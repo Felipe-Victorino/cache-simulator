@@ -5,18 +5,34 @@
 #include <list>
 #include "cache.hpp"
 
+enum MemoryAccess{SEQUENTIAL, RANDOM};
 
 class Processor
 {
     private:
-    enum MemoryAccess{SEQUENTIAL, RANDOM};
-    enum MemoryAccess access;
-    std::list<Cache> *cache;
-    public:
-    Processor();
-    Processor(std::list<Cache> *cache);
     
+    enum MemoryAccess p_access;
+ 
+
+    public:
+    
+    Processor();
     ~Processor();
+    
+    
+    void read();
+    void write();
+
+    int genRandomAddress()
+    {
+        return std::rand() % (sizeof(u_int32_t) * 8);
+    };
+
+    void iterateThroughCache();
+    void search();
+    void randomAccess();
+    void sequentialAccess();
+
 };
 
 
