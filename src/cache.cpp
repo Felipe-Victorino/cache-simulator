@@ -7,6 +7,14 @@ Cache::Cache(std::string name, int latency, int associativity, int set_amount, W
     this->p_associativity = associativity;
     this->p_set_amount = set_amount;
     this->p_policy = policy;
+    this->p_cache_size = calculateCacheSize();
+    
+    for (size_t i = 0; i < calculateLineTotal(); i++)
+    {
+        CacheLine line;
+        this->p_lines.push_back(line);
+    }
+    
 };
 
 uint32_t Cache::calculateCacheSize(){
