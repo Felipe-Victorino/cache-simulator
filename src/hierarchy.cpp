@@ -1,7 +1,7 @@
 #include "hierarchy.hpp"
 #include "debug.hpp"
 
-MemoryHierarchy::MemoryHierarchy(int quantity, int runtime)
+MemoryHierarchy::MemoryHierarchy(uint32_t quantity, uint32_t runtime)
 {
     this->p_levelQuantity = quantity;
     this->fillCacheList();
@@ -12,95 +12,63 @@ MemoryHierarchy::MemoryHierarchy(int quantity, int runtime)
 
 }
 
+MemoryHierarchy::MemoryHierarchy(uint32_t quantity, uint32_t runtime, uint32_t stride)
+{
+    this->p_levelQuantity = quantity;
+    this->fillCacheList();
+    this->mainMemory = configureMainMemory();
+    Processor processor;
+
+    this->processor = processor;
+
+}
 
 MainMemory MemoryHierarchy::configureMainMemory()
 {
    MainMemory main;
-
-   std::string name;
-   uint32_t latency;
-
-   
-   std::cout << "Set Name of Main Memory: ";
-   std::getline(std::cin, name);
-   std::cout << '\n';
-
-   std::cout << "Set latency: ";
-   std::cin >> latency;
-   std::cout << '\n';
-
-   main.setName(name);
-   main.setLatency(latency);
-   
+   main.setName(MAIN_NAME);
+   main.setLatency(MAIN_LATENCY);
    return main;
-};
-
-Cache MemoryHierarchy::configureCacheLevels(){
-
-    Cache cache;
-
-    std::string name;
-    uint32_t latency;
-    uint32_t associativity;
-    uint32_t sets;
-    uint32_t policy;
-
-    
-    std::cout << "Set Name of Cache Level: ";
-    std::getline(std::cin, name);
-    std::cout << std::endl;
-
-    std::cout << "Set latency: ";
-    std::cin >> latency;
-    std::cout << std::endl;
-
-    std::cout << "Set associativity: ";
-    std::cin >> associativity;
-    std::cout << std::endl;
-
-    std::cout << "Set set amount: ";
-    std::cin >> sets;
-    std::cout << std::endl;
-
-    std::cout << "0 = Write-back, 1 = Write-through";
-    std::cout << "Set policy: ";
-    std::cin >> policy;
-    std::cout << std::endl;
-
-   
-
-    cache.setName(name);
-    cache.setLatency(latency);
-    cache.setAssociativity(associativity);
-    cache.setAssociativeSet(sets);
-     
-    if(policy == 0){
-        cache.setPolicy(WRITE_BACK);
-    } else if (policy == 1){
-        cache.setPolicy(WRITE_THROUGH);
-    } else {
-        std::cout << "ERRO: Valor inválido: Valor padrão WRITE BACK";
-        cache.setPolicy(WRITE_BACK);
-    }
-    cache.setCacheSize(cache.calculateCacheSize());
-    
-    return cache;
 };
 
 void MemoryHierarchy::fillCacheList()
 {
+    std::cout << "Preenchendo cache" << std::endl;
     
-    for (size_t i = 0; i < this->p_levelQuantity; i++)
-    {
-        std::cout << "Preenchendo cache" << std::endl;
-        Cache cacheLevel;
-        cacheLevel = configureCacheLevels();
-        std::cin.ignore();
-        this->cacheList.push_back(cacheLevel);
-    }
+    Cache l1 = Cache(L1_NAME, L1_LATENCY, L1_ASSOCIATIVITY, L1_SET_AMOUNT, L1_POLICY);
+    Cache l2 = Cache(L2_NAME, L2_LATENCY, L2_ASSOCIATIVITY, L2_SET_AMOUNT, L2_POLICY);
+    Cache l3 = Cache(L3_NAME, L3_LATENCY, L3_ASSOCIATIVITY, L3_SET_AMOUNT, L3_POLICY);
+    
+    this->cacheList.push_back(l1);
+    this->cacheList.push_back(l2);
+    this->cacheList.push_back(l3);  
 
-    for (Cache c: cacheList){
-        c.printCache();
+};
+
+void MemoryHierarchy::randomAccess()
+{
+    for (size_t i = 0; i < this->p_n; i++)
+    {
+        uint32_t target = this->processor.genRandomAddress();
+        //std::cout << this->cacheList.at(i).getLatency();
     }
-   
+    
+};
+
+void MemoryHierarchy::sequentialAccess()
+{
+    for (size_t i = 0; i < this->p_n; i += this->p_stride)
+    {
+        uint32_t target = this->processor.genRandomAddress();
+
+        //std::cout << this->cacheList.at(i).getLatency();
+        
+    }
+    
+    
+};
+
+void MemoryHierarchy::search(uint32_t address)
+{
+
 };
