@@ -1,42 +1,29 @@
 #ifndef PROCESSOR_H
 #define PROCESSOR_H
 
-#include <cstdlib>
 #include <list>
+
+#include <cstdlib>
+
 #include "cache.hpp"
 
-enum MemoryAccess{SEQUENTIAL, RANDOM};
+enum Instruction
+{
+    WRITE, 
+    READ
+};
 
 class Processor
 {
-    private:
-    
-    enum MemoryAccess p_access;
- 
-
     public:
     
     Processor();
     ~Processor();
     
-    
-    void read();
-    void write();
-
-    int genRandomAddress()
-    {
-        return std::rand() % (sizeof(u_int32_t) * 8);
-    };
-
-    void iterateThroughCache();
-    void search();
-    void randomAccess();
-    void sequentialAccess();
+    Instruction read();
+    Instruction write();
+    uint32_t genRandomAddress();
 
 };
-
-
-
-
 
 #endif

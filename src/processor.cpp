@@ -10,35 +10,15 @@ Processor::~Processor()
 {
 }
 
-void Processor::write(){
-
+Instruction Processor::write(){
+    return WRITE;
 }
 
-void Processor::read(){
-
+Instruction Processor::read(){
+    return READ;
 }
 
-void Processor::randomAccess()
+uint32_t Processor::genRandomAddress()
 {
-    for (size_t i = 0; i < this->p_n; this->genRandomAddress())
-    {
-        std::cout << this->p_cache->at(i).getLatency();
-    }
-    
-}
-
-void Processor::search()
-{
-
-}
-
-void Processor::sequentialAccess()
-{
-    for (size_t i = 0; i < this->p_n; i + this->p_stride)
-    {
-        std::cout << this->p_cache->at(i).getLatency();
-        
-    }
-    
-    
-}
+    return std::rand() % (sizeof(uint32_t) * 8);
+};
