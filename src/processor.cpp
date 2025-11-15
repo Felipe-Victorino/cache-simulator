@@ -1,18 +1,24 @@
 #include "processor.hpp"
+#include "debug.hpp"
 
-#define DEBUG
-
-#ifdef DEBUG
-#define dprint(x) std::cout << x << '\n'
-#else 
-#define dprint(x) do{} while(0)
-#endif
-
-Processor::Processor(std::list<Cache> *cache)
+Processor::Processor()
 {
-    this->cache = cache;
+
 }
 
 Processor::~Processor()
 {
 }
+
+Instruction Processor::write(){
+    return WRITE;
+}
+
+Instruction Processor::read(){
+    return READ;
+}
+
+uint32_t Processor::genRandomAddress()
+{
+    return std::rand() % (sizeof(uint32_t) * 8);
+};
