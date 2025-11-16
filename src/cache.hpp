@@ -49,6 +49,9 @@ private:
     std::vector<CacheLine> p_lines;
     WritePolicy p_policy;
 
+    uint32_t p_cache_hit;
+    uint32_t p_cache_miss;
+
 public:
     Cache();
     Cache(std::string name, int latency, int associativity, int set_amount, WritePolicy policy);
@@ -59,7 +62,7 @@ public:
 
     // GETTERS E SETTERS
 
-    std::vector<CacheLine> getLines(){return this->p_lines;};
+    std::vector<CacheLine> getLines(){return this->p_lines;}
 
     std::string getName(){return this->p_name;}
     void setName(std::string name){this->p_name = name;}
@@ -76,10 +79,16 @@ public:
     void setAssociativity(uint32_t associativity){this->p_associativity = associativity;}
 
     uint32_t getAssociativeSet(){return this->p_set_amount;}
-    void setAssociativeSet(uint32_t sets){this->p_set_amount = sets;};
+    void setAssociativeSet(uint32_t sets){this->p_set_amount = sets;}
 
-    WritePolicy getPolicy(){return this->p_policy;};
+    WritePolicy getPolicy(){return this->p_policy;}
     void setPolicy(WritePolicy policy){ this->p_policy = policy;}
+
+    uint32_t getCacheHit(){return this->p_cache_hit;}
+    void incCacheHit(){this->p_cache_hit += 1;}
+
+    uint32_t getCacheMiss(){return this->p_cache_miss;}
+    void incCacheMiss(){this->p_cache_miss += 1;}
 
 };
 
