@@ -2,24 +2,27 @@
 #define PROCESSOR_H
 
 #include <cstdlib>
-#include <list>
+
 #include "cache.hpp"
 
+enum Instruction
+{
+    WRITE, 
+    READ
+};
 
 class Processor
 {
-    private:
-    enum MemoryAccess{SEQUENTIAL, RANDOM};
-    enum MemoryAccess access;
-    std::list<Cache> *cache;
     public:
-    Processor(std::list<Cache> *cache);
     
+    Processor();
     ~Processor();
+    
+    Instruction read();
+    Instruction write();
+    Instruction sendInstruction(int ratio);
+    uint32_t genRandomAddress();
+
 };
-
-
-
-
 
 #endif
