@@ -1,25 +1,38 @@
 #include "hierarchy.hpp"
 #include "debug.hpp"
 
-MemoryHierarchy::MemoryHierarchy(uint32_t quantity, uint32_t runtime)
+MemoryHierarchy::MemoryHierarchy(uint32_t quantity, uint32_t runtime, int32_t buffer, int32_t write_ratio)
 {
     this->p_levelQuantity = quantity;
+    this->p_n = runtime;
+    this->p_buffer = buffer;
+    this->p_write_ratio = write_ratio;
+
     this->fillCacheList();
     this->mainMemory = configureMainMemory();
     Processor processor;
 
     this->processor = processor;
+
+    randomAccess();
 
 }
 
-MemoryHierarchy::MemoryHierarchy(uint32_t quantity, uint32_t runtime, uint32_t stride)
+MemoryHierarchy::MemoryHierarchy(uint32_t quantity, uint32_t runtime, int32_t buffer, uint32_t stride, int32_t write_ratio)
 {
     this->p_levelQuantity = quantity;
+    this->p_n = runtime;
+    this->p_buffer = buffer;
+    this->p_stride = stride;
+    this->p_write_ratio = write_ratio;
+
     this->fillCacheList();
     this->mainMemory = configureMainMemory();
+    
     Processor processor;
-
     this->processor = processor;
+
+    sequentialAccess();
 
 }
 
@@ -49,21 +62,32 @@ void MemoryHierarchy::randomAccess()
 {
     for (size_t i = 0; i < this->p_n; i++)
     {
+        if (i + 1 > this->p_buffer){
+            i = 0;
+        }
         uint32_t target = this->processor.genRandomAddress();
-        //std::cout << this->cacheList.at(i).getLatency();
+        search(target);
+
+        std::cout << i << std::endl;
+        
     }
     
 };
 
 void MemoryHierarchy::sequentialAccess()
 {
-    for (size_t i = 0; i < this->p_n; i += this->p_stride)
+    for (size_t i = 0; i < this->p_n; i += p_stride)
     {
-        uint32_t target = this->processor.genRandomAddress();
+        if (i + 1 > this->p_buffer){
+            i = 0;
+        }
 
-        //std::cout << this->cacheList.at(i).getLatency();
-        
+        uint32_t target = i;
+        search(target);
+
+        std::cout << i << std::endl;
     }
+    
     
     
 };
@@ -71,4 +95,18 @@ void MemoryHierarchy::sequentialAccess()
 void MemoryHierarchy::search(uint32_t address)
 {
 
+    for(Cache level : this->cacheList){
+        this->p_cycles_used += level.getLatency();
+        
+        for (CacheLine line : level.getLines()){
+
+            if(line.tag == address){
+                level.incCacheHit();
+                return;
+            } else {
+                level.incCacheMiss();
+                return;
+            }
+        }
+    }
 };
