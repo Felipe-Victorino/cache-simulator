@@ -1,3 +1,5 @@
+#include <format>
+
 #include "hierarchy.hpp"
 #include "debug.hpp"
 
@@ -16,6 +18,9 @@ MemoryHierarchy::MemoryHierarchy(uint32_t quantity, uint32_t runtime, int32_t bu
 
     randomAccess();
 
+    printCaches();
+    printStats();
+
 }
 
 MemoryHierarchy::MemoryHierarchy(uint32_t quantity, uint32_t runtime, int32_t buffer, uint32_t stride, int32_t write_ratio)
@@ -33,6 +38,9 @@ MemoryHierarchy::MemoryHierarchy(uint32_t quantity, uint32_t runtime, int32_t bu
     this->processor = processor;
 
     sequentialAccess();
+
+    printCaches();
+    printStats();
 
 }
 
@@ -58,6 +66,37 @@ void MemoryHierarchy::fillCacheList()
 
 };
 
+void MemoryHierarchy::printCaches()
+{
+    for(Cache cache : this->cacheList){
+        cache.printCache();
+    }
+};
+
+void MemoryHierarchy::printStats()
+{
+
+    for (size_t i = 0; i < 50; i++)
+    {
+        std::cout << '=';
+    }
+    std::cout << std::endl;
+
+    std::cout << "Cycles: " << this->p_cycles_used << std::endl;
+
+    for (size_t i = 0; i < 50; i++)
+    {
+        std::cout << '=';
+    }
+    std::cout << std::endl;
+    
+    for(Cache cache : this->cacheList){
+        std::cout << "Name: " << cache.getName() << std::endl;
+        std::cout << "Cache hits: " << cache.getCacheHit() << std::endl;
+        std::cout << "Cache misses: " << cache.getCacheMiss() << std::endl;
+    }
+}
+
 void MemoryHierarchy::randomAccess()
 {
     for (size_t i = 0; i < this->p_n; i++)
@@ -65,10 +104,11 @@ void MemoryHierarchy::randomAccess()
         if (i + 1 > this->p_buffer){
             i = 0;
         }
+
         uint32_t target = this->processor.genRandomAddress();
         search(target);
 
-        std::cout << i << std::endl;
+        //std::cout << std::format("endereço requisitado: {:#010x}", target) << std::endl;
         
     }
     
@@ -85,10 +125,8 @@ void MemoryHierarchy::sequentialAccess()
         uint32_t target = i;
         search(target);
 
-        std::cout << i << std::endl;
+        //std::cout << std::format("endereço requisitado: {:#010x}", target) << std::endl;
     }
-    
-    
     
 };
 
@@ -96,8 +134,9 @@ void MemoryHierarchy::search(uint32_t address)
 {
 
     for(Cache level : this->cacheList){
+
         this->p_cycles_used += level.getLatency();
-        
+
         for (CacheLine line : level.getLines()){
 
             if(line.tag == address){
@@ -105,8 +144,10 @@ void MemoryHierarchy::search(uint32_t address)
                 return;
             } else {
                 level.incCacheMiss();
-                return;
+                
             }
+            
         }
+        this->p_cycles_used += this->mainMemory.getLatency();
     }
 };

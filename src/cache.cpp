@@ -28,12 +28,20 @@ uint32_t Cache::calculateLineTotal(){
 };
 
 void Cache::printCache(){
+    for (size_t i = 0; i < 50; i++)
+    {
+        std::cout << '=';
+    }
+    std::cout << std::endl;
+    
     std::cout << "Name: " << this->p_name << std::endl;
     std::cout << "Latency: " << this->p_latency << std::endl;
     std::cout << "Line size: " << this->p_linesize << std::endl;
     std::cout << "Associativity: " << this->p_associativity << std::endl;
     std::cout << "Sets: " << this->p_set_amount << std::endl;
+    std::cout << "Line total:" << calculateLineTotal() << std::endl;
     std::cout << "Cache size: " << this->p_cache_size << std::endl;
+
     std::cout << "Policy: " << this->p_policy << std::endl;
 
 }

@@ -28,7 +28,7 @@ const uint32_t MAIN_LATENCY = 220;
 
 class MemoryHierarchy{
 
-    private:
+private:
     /* Ultima cache da lista é memória principal*/
     uint32_t p_n;
     uint32_t p_stride = 1;
@@ -44,7 +44,7 @@ class MemoryHierarchy{
     MainMemory configureMainMemory();
     Cache configureCacheLevels();
 
-    public:
+public:
 
     MemoryHierarchy(uint32_t quantity, uint32_t runtime, int32_t buffer, uint32_t stride, int32_t write_ratio);
     MemoryHierarchy(uint32_t quantity, uint32_t runtime, int32_t buffer, int32_t write_ratio);
@@ -52,6 +52,8 @@ class MemoryHierarchy{
     int getLevelQuantity(){return this->p_levelQuantity;}
 
     void fillCacheList();
+    void printCaches();
+    void printStats();
 
     int genRandomAddress();
 

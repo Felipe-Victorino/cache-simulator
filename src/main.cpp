@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <cstdlib>
+#include <ctime>
 
 #include <my-lib/bit.h>
 
@@ -11,6 +12,7 @@
 
 int main (int argc, char **argv)
 {
+	srand(time(0)); //semente de aleatoriedade
 	
 	if(argc < 2){
 		printf("usage: %s sequential [cache_levels] [n] [buffer] [stride] [write_ratio]\n", argv[0]);
