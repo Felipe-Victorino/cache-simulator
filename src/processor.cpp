@@ -22,5 +22,7 @@ Instruction Processor::read(){
 
 uint32_t Processor::genRandomAddress()
 {
-    return std::rand() % (sizeof(uint32_t) * 8);
+    //infelizmente a rand tem um limite de um inteiro com sinal;
+    //felizmente o bitshift é uma possibilidade
+    return static_cast<uint32_t>(rand());
 };
