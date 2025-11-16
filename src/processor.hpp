@@ -1,8 +1,6 @@
 #ifndef PROCESSOR_H
 #define PROCESSOR_H
 
-#include <list>
-
 #include <cstdlib>
 
 #include "cache.hpp"
@@ -22,6 +20,7 @@ class Processor
     
     Instruction read();
     Instruction write();
+    Instruction sendInstruction(int ratio);
     uint32_t genRandomAddress();
 
 };

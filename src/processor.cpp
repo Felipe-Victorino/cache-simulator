@@ -11,11 +11,13 @@ Processor::~Processor()
 }
 
 Instruction Processor::write(){
-    return WRITE;
+    Instruction ins = WRITE;
+    return ins;
 }
 
 Instruction Processor::read(){
-    return READ;
+    Instruction ins = READ;
+    return ins;
 }
 
 uint32_t Processor::genRandomAddress()

@@ -24,7 +24,7 @@ const uint32_t L3_SET_AMOUNT = 32;
 const WritePolicy L3_POLICY = WRITE_BACK;
 
 const std::string MAIN_NAME = "Main Memory";
-const uint32_t MAIN_LATENCY = 12;
+const uint32_t MAIN_LATENCY = 220;
 
 class MemoryHierarchy{
 
@@ -32,6 +32,9 @@ class MemoryHierarchy{
     /* Ultima cache da lista é memória principal*/
     uint32_t p_n;
     uint32_t p_stride = 1;
+    uint32_t p_buffer;
+    uint32_t p_write_ratio;
+    uint32_t p_cycles_used;
 
     Processor processor; // objeto processador
     std::vector<Cache> cacheList; // lista com as memórias
@@ -43,8 +46,8 @@ class MemoryHierarchy{
 
     public:
 
-    MemoryHierarchy(uint32_t quantity, uint32_t runtime, uint32_t stride);
-    MemoryHierarchy(uint32_t quantity, uint32_t runtime);
+    MemoryHierarchy(uint32_t quantity, uint32_t runtime, int32_t buffer, uint32_t stride, int32_t write_ratio);
+    MemoryHierarchy(uint32_t quantity, uint32_t runtime, int32_t buffer, int32_t write_ratio);
 
     int getLevelQuantity(){return this->p_levelQuantity;}
 
