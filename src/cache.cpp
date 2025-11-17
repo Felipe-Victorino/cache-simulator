@@ -1,6 +1,8 @@
-#include <cmath>
+#include <my-lib/math.h>
 
 #include "cache.hpp"
+
+
 
 Cache::Cache()
 {
@@ -35,16 +37,43 @@ uint32_t Cache::calculateLineTotal(){
 };
 
 uint32_t Cache::calculateOffsetSize(){
-    return std::log2(this->p_linesize);
+    return Mylib::Math::base2_log_of_integer(this->p_linesize); //
 };
 
 uint32_t Cache::calculateIndexSize(){
-    return std::log2(this->p_set_amount);
+    return Mylib::Math::base2_log_of_integer(this->p_set_amount);
 };
 
 uint32_t Cache::calculateTagSize(){
     return this->p_linesize - calculateIndexSize() - calculateOffsetSize();
 }
+
+uint32_t Cache::checkLines(uint32_t tag, uint32_t index){
+    for (size_t i = 0; i < this->p_lines.size(); i++)
+    {
+        if(i % this->p_associativity == index)
+        {
+            if(this->p_lines.at(i).tag == tag)
+            {
+                incCacheHit();
+            
+                return 1;
+            } 
+        } else {
+            incCacheMiss(); 
+        }
+        
+    }
+    return 0;
+};
+
+void Cache::writeBack(){
+
+};
+
+void Cache::writeThrough(){
+
+};
 
 void Cache::printCache(){
     for (size_t i = 0; i < 50; i++)
