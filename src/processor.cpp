@@ -10,19 +10,20 @@ Processor::~Processor()
 {
 }
 
-Instruction Processor::write(){
-    Instruction ins = WRITE;
-    return ins;
-}
+GroupIns Processor::sendInstruction(uint32_t write_ratio)
+{
+    GroupIns ins;
 
-Instruction Processor::read(){
-    Instruction ins = READ;
+    if( static_cast<uint32_t>((rand() % 100)) < write_ratio){
+        ins.type = WRITE;
+    } else {
+        ins.type = READ;
+    };
+
     return ins;
 }
 
 uint32_t Processor::genRandomAddress()
 {
-    //infelizmente a rand tem um limite de um inteiro com sinal;
-    //felizmente o bitshift é uma possibilidade
     return static_cast<uint32_t>(rand());
 };
