@@ -2,6 +2,8 @@
 #define HIERARCHY_H
 #include <list>
 
+#include<my-lib/bit.h>
+
 #include "cache.hpp"
 #include "processor.hpp"
 
@@ -44,6 +46,16 @@ private:
     MainMemory configureMainMemory();
     Cache configureCacheLevels();
 
+    void search(GroupIns instruction);
+    void randomAccess();
+    void sequentialAccess();
+    void addInstructionTypeCounter(InstructionType type);
+
+    void copyBack(Cache& level, GroupIns instruction);
+
+    uint32_t getTag(uint32_t address, uint32_t tag_size, uint32_t index_size, uint32_t offset_size);
+    uint32_t getIndex(uint32_t address, uint32_t tag_size, uint32_t index_size, uint32_t offset_size);
+
 public:
 
     MemoryHierarchy(uint32_t quantity, uint32_t runtime, int32_t buffer, uint32_t stride, int32_t write_ratio);
@@ -55,11 +67,6 @@ public:
     void printCaches();
     void printStats();
 
-    int genRandomAddress();
-
-    void search(uint32_t address);
-    void randomAccess();
-    void sequentialAccess();
 
 };
 

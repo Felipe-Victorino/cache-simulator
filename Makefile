@@ -1,7 +1,6 @@
 CPP = g++
 MYLIB = ../my-lib
-FLAGS = -g
-CPPFLAGS = -Wall -std=c++23 -I$(MYLIB)/include
+CPPFLAGS = -g -Wall -std=c++23 -I$(MYLIB)/include
 LDFLAGS =
 BIN_NAME = cache-sim
 RM = rm

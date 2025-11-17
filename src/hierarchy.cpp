@@ -75,13 +75,12 @@ void MemoryHierarchy::printCaches()
 
 void MemoryHierarchy::printStats()
 {
-
     for (size_t i = 0; i < 50; i++)
     {
         std::cout << '=';
     }
     std::cout << std::endl;
-
+    
     std::cout << "Cycles: " << this->p_cycles_used << std::endl;
 
     for (size_t i = 0; i < 50; i++)
@@ -89,7 +88,7 @@ void MemoryHierarchy::printStats()
         std::cout << '=';
     }
     std::cout << std::endl;
-    
+
     for(Cache cache : this->cacheList){
         std::cout << "Name: " << cache.getName() << std::endl;
         std::cout << "Cache hits: " << cache.getCacheHit() << std::endl;
@@ -105,8 +104,9 @@ void MemoryHierarchy::randomAccess()
             i = 0;
         }
 
-        uint32_t target = this->processor.genRandomAddress();
-        search(target);
+        GroupIns ins = processor.sendInstruction(this->p_write_ratio);
+        ins.address = this->processor.genRandomAddress();
+        search(ins);
 
         //std::cout << std::format("endereço requisitado: {:#010x}", target) << std::endl;
         
@@ -116,38 +116,87 @@ void MemoryHierarchy::randomAccess()
 
 void MemoryHierarchy::sequentialAccess()
 {
-    for (size_t i = 0; i < this->p_n; i += p_stride)
+    for (size_t i = 0; i < this->p_n; i ++)
     {
-        if (i + 1 > this->p_buffer){
+        if (i + 1 > this->p_buffer)
+        {
             i = 0;
         }
 
-        uint32_t target = i;
-        search(target);
+        GroupIns ins = processor.sendInstruction(this->p_write_ratio);
+        ins.address = this->processor.genRandomAddress();
+        search(ins);
 
         //std::cout << std::format("endereço requisitado: {:#010x}", target) << std::endl;
     }
     
 };
 
-void MemoryHierarchy::search(uint32_t address)
+uint32_t MemoryHierarchy::getTag(uint32_t address, uint32_t tag_size, uint32_t index_size, uint32_t offset_size)
+{
+    uint32_t tag = address >> (offset_size + index_size);
+    return tag;
+};
+
+uint32_t MemoryHierarchy::getIndex(uint32_t address, uint32_t tag_size, uint32_t index_size, uint32_t offset_size)
+{
+    uint32_t tag_index = address >> offset_size;
+    uint32_t mask = (1 << index_size) - 1;
+    uint32_t index = tag_index & mask;
+    return index;
+}
+
+
+void MemoryHierarchy::search(GroupIns instruction)
 {
 
-    for(Cache level : this->cacheList){
+    for(Cache& level : this->cacheList) 
+    {
+        uint32_t tag_size = level.calculateTagSize();
+        uint32_t index_size = level.calculateIndexSize();
+        uint32_t offset_size = level.calculateOffsetSize();
+        
+        uint32_t tag = getTag(instruction.address, tag_size, index_size, offset_size);
+        uint32_t index = getIndex(instruction.address, tag_size, index_size, offset_size);
 
         this->p_cycles_used += level.getLatency();
 
-        for (CacheLine line : level.getLines()){
+        level.checkLines(tag, index);
 
-            if(line.tag == address){
-                level.incCacheHit();
-                return;
-            } else {
-                level.incCacheMiss();
-                
-            }
-            
-        }
+        addInstructionTypeCounter(instruction.type);
         this->p_cycles_used += this->mainMemory.getLatency();
+        //copyBack(level, instruction);
     }
 };
+
+void MemoryHierarchy::addInstructionTypeCounter(InstructionType type)
+{
+    switch(type)
+        {
+            case WRITE:
+                this->mainMemory.incWriteCount();
+                break;
+            case READ:
+                this->mainMemory.incReadCount();
+                break;
+            default:
+                std::cerr << "Tipo de instrução inválido";
+                exit(0);
+        }
+}
+/*
+void MemoryHierarchy::copyBack(Cache &level, GroupIns instruction)
+{
+    for (Cache& l : this->cacheList) //&
+    { 
+
+        l.getLines().at(index).tag = instruction.address;
+
+        if (l.getName() == level.getName()) //como comparar objetos
+        {
+            return;
+        }
+
+    }
+};
+*/
