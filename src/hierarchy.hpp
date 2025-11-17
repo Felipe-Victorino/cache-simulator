@@ -46,13 +46,13 @@ private:
     MainMemory configureMainMemory();
     Cache configureCacheLevels();
 
-    void search(uint32_t address);
+    void search(GroupIns instruction);
     void randomAccess();
     void sequentialAccess();
+    void addInstructionTypeCounter(InstructionType type);
 
-    void copyBack(Cache &level);
-    void writeBack();
-    void writeThrough();
+    void copyBack(Cache& level, GroupIns instruction);
+
     uint32_t getTag(uint32_t address, uint32_t tag_size, uint32_t index_size, uint32_t offset_size);
     uint32_t getIndex(uint32_t address, uint32_t tag_size, uint32_t index_size, uint32_t offset_size);
 
