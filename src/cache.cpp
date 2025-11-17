@@ -1,4 +1,11 @@
+#include <cmath>
+
 #include "cache.hpp"
+
+Cache::Cache()
+{
+
+}
 
 Cache::Cache(std::string name, int latency, int associativity, int set_amount, WritePolicy policy)
 {
@@ -27,6 +34,18 @@ uint32_t Cache::calculateLineTotal(){
     return total;
 };
 
+uint32_t Cache::calculateOffsetSize(){
+    return std::log2(this->p_linesize);
+};
+
+uint32_t Cache::calculateIndexSize(){
+    return std::log2(this->p_set_amount);
+};
+
+uint32_t Cache::calculateTagSize(){
+    return this->p_linesize - calculateIndexSize() - calculateOffsetSize();
+}
+
 void Cache::printCache(){
     for (size_t i = 0; i < 50; i++)
     {
@@ -43,9 +62,5 @@ void Cache::printCache(){
     std::cout << "Cache size: " << this->p_cache_size << std::endl;
 
     std::cout << "Policy: " << this->p_policy << std::endl;
-
-}
-Cache::Cache()
-{
 
 }

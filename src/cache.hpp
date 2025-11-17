@@ -60,6 +60,10 @@ public:
     uint32_t calculateLineTotal();
     void printCache();
 
+    uint32_t calculateOffsetSize();
+    uint32_t calculateIndexSize();
+    uint32_t calculateTagSize();
+
     // GETTERS E SETTERS
 
     std::vector<CacheLine> getLines(){return this->p_lines;}
