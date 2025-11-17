@@ -5,10 +5,17 @@
 
 #include "cache.hpp"
 
-enum Instruction
+enum InstructionType
 {
     WRITE, 
     READ
+};
+
+struct GroupIns {
+    InstructionType type;
+    uint32_t address;
+    uint32_t tag;
+
 };
 
 class Processor
@@ -18,9 +25,7 @@ class Processor
     Processor();
     ~Processor();
     
-    Instruction read();
-    Instruction write();
-    Instruction sendInstruction(int ratio);
+    GroupIns sendInstruction(uint32_t write_ratio);
     uint32_t genRandomAddress();
 
 };
