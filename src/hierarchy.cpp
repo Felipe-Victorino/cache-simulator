@@ -1,4 +1,5 @@
 #include <format>
+#include <my-lib/bit.h>
 
 #include "hierarchy.hpp"
 #include "debug.hpp"
@@ -75,13 +76,12 @@ void MemoryHierarchy::printCaches()
 
 void MemoryHierarchy::printStats()
 {
-
     for (size_t i = 0; i < 50; i++)
     {
         std::cout << '=';
     }
     std::cout << std::endl;
-
+    
     std::cout << "Cycles: " << this->p_cycles_used << std::endl;
 
     for (size_t i = 0; i < 50; i++)
@@ -89,7 +89,7 @@ void MemoryHierarchy::printStats()
         std::cout << '=';
     }
     std::cout << std::endl;
-    
+
     for(Cache cache : this->cacheList){
         std::cout << "Name: " << cache.getName() << std::endl;
         std::cout << "Cache hits: " << cache.getCacheHit() << std::endl;
@@ -123,6 +123,7 @@ void MemoryHierarchy::sequentialAccess()
         }
 
         uint32_t target = i;
+
         search(target);
 
         //std::cout << std::format("endereço requisitado: {:#010x}", target) << std::endl;
@@ -130,17 +131,40 @@ void MemoryHierarchy::sequentialAccess()
     
 };
 
+uint32_t MemoryHierarchy::getTag(uint32_t address, uint32_t tag_size, uint32_t index_size, uint32_t offset_size)
+{
+    uint32_t tag = address >> (offset_size + index_size);
+    return tag;
+};
+
+uint32_t MemoryHierarchy::getIndex(uint32_t address, uint32_t tag_size, uint32_t index_size, uint32_t offset_size)
+{
+    uint32_t tag_index = address >> offset_size;
+    uint32_t mask = (1 << index_size) - 1;
+    uint32_t index = tag_index & mask;
+    return index;
+}
+
 void MemoryHierarchy::search(uint32_t address)
 {
 
-    for(Cache level : this->cacheList){
+    for(Cache level : this->cacheList)
+    {
+        uint32_t tag_size = level.calculateTagSize();
+        uint32_t index_size = level.calculateIndexSize();
+        uint32_t offset_size = level.calculateOffsetSize();
+        
+        uint32_t tag = getTag(address, tag_size, index_size, offset_size);
+        uint32_t index = getIndex(address, tag_size, index_size, offset_size);
 
         this->p_cycles_used += level.getLatency();
 
-        for (CacheLine line : level.getLines()){
-
-            if(line.tag == address){
+        for (CacheLine line : level.getLines())
+        {
+            if(line.tag == tag)
+            {
                 level.incCacheHit();
+                copyBack(level);
                 return;
             } else {
                 level.incCacheMiss();
@@ -149,5 +173,27 @@ void MemoryHierarchy::search(uint32_t address)
             
         }
         this->p_cycles_used += this->mainMemory.getLatency();
+        copyBack(level);
     }
+};
+
+void MemoryHierarchy::copyBack(Cache &level)
+{
+    for (Cache l : this->cacheList)
+    {
+        if (l.getName() == level.getName())
+        {
+            return;
+        }
+
+        
+    }
+};
+
+void MemoryHierarchy::writeBack(){
+
+};
+
+void MemoryHierarchy::writeThrough(){
+
 };
