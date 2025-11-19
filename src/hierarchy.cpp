@@ -1,7 +1,7 @@
 #include <format>
 
 #include "hierarchy.hpp"
-#include "debug.hpp"
+
 
 MemoryHierarchy::MemoryHierarchy(uint32_t quantity, uint32_t runtime, int32_t buffer, int32_t write_ratio)
 {
@@ -87,7 +87,7 @@ void MemoryHierarchy::printStats()
     }
     std::cout << std::endl;
 
-    for (Cache cache : this->cacheList)
+    for (Cache& cache : this->cacheList)
     {
         std::cout << "Name: " << cache.getName() << std::endl;
         std::cout << "Cache hits: " << cache.getCacheHit() << std::endl;
@@ -164,7 +164,7 @@ void MemoryHierarchy::search(GroupIns instruction)
 {
     bool hit = false;
 
-    for (Cache &level : this->cacheList)
+    for (Cache& level : this->cacheList)
     {
         uint32_t tag_size = level.calculateTagSize();
         uint32_t index_size = level.calculateIndexSize();

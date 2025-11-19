@@ -8,7 +8,6 @@
 #include <my-lib/bit.h>
 
 #include "hierarchy.hpp"
-#include "debug.hpp"
 
 int main (int argc, char **argv)
 {

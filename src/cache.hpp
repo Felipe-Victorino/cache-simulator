@@ -14,7 +14,7 @@ A CACHE NÃO ARMAZENA DADOS REAIS, ELA É UM SIMULADOR DE TEMPO
 // qtd total de linhas = associatividade * conjuntos
 
 struct CacheLine {
-    int content : 1;
+    bool content : 1;
     uint32_t tag;
     bool dirty = false;
     u_int32_t age;
