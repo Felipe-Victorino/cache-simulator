@@ -27,8 +27,8 @@ class MainMemory{
 private:
     std::string p_name;
     uint32_t p_latency;
-    uint32_t p_write_count;
-    uint32_t p_read_count;
+    uint32_t p_write_count = 0;
+    uint32_t p_read_count = 0;
     uint32_t p_size = 1 << 31; // 32 bits, a quantidade de endereços da memória
 public:
 
@@ -41,8 +41,10 @@ public:
     void setName(std::string name){this->p_name = name;}
     void setLatency(uint32_t latency){this->p_latency = latency;}
 
-    void incWriteCount(){this->p_write_count += 1;}
-    void incReadCount(){this->p_write_count += 1;}
+    void incWriteCount() { this->p_write_count += 1; }
+    void incReadCount() { this->p_read_count += 1; }
+
+    void printStats();
 };
 
 class Cache

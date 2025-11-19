@@ -13,7 +13,7 @@
 int main (int argc, char **argv)
 {
 	srand(time(0)); //semente de aleatoriedade
-	
+	/// RETIRAR CACHE LEVELS 
 	if(argc < 2){
 		printf("usage: %s sequential [cache_levels] [n] [buffer] [stride] [write_ratio]\n", argv[0]);
 		printf("usage: %s random [cache_levels] [n] [buffer] [write_ratio]\n", argv[0]);
